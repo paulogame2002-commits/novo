@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stream Player</title>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <style>
+        body { margin: 0; background: #000; overflow: hidden; display: flex; align-items: center; height: 100vh; }
+        .video-js { width: 100vw; height: 100vh; }
+    </style>
+</head>
+<body>
+    <video id="vid" class="video-js vjs-big-play-centered" controls preload="auto" playsinline></video>
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        if (token) {
+            const player = videojs('vid');
+            player.src({ src: atob(token), type: 'application/x-mpegURL' });
+            player.play();
+        }
+    </script>
+</body>
+</html>
