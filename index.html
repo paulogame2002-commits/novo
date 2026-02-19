@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Player Elite</title>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; }
+        #my-video { width: 100vw; height: 100vh; }
+    </style>
+</head>
+<body>
+
+    <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto"></video>
+
+    <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
+    <script>
+        // Função para pegar o token na URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (token) {
+            try {
+                // DESCRIPTOGRAFA o link na hora do play
+                const streamUrl = atob(token); 
+                
+                var player = videojs('my-video');
+                player.src({
+                    src: streamUrl,
+                    type: 'application/x-mpegURL'
+                });
+                player.play();
+            } catch (e) {
+                console.error("Erro no sinal");
+            }
+        }
+    </script>
+</body>
+</html>
